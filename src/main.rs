@@ -1,24 +1,54 @@
+use std::path::{Path, PathBuf};
+
 use clap::Parser;
 
 #[derive(Parser)]
 struct Args {
-    #[arg(short, long)]
-    count: u32, // Number of bytes
+    #[arg(short)]
+    count: Option<PathBuf>, // Number of bytes
 
-    #[arg(short, long)]
-    lines: u32, // Number of lines
+    #[arg(short)]
+    lines: Option<PathBuf>, // Number of lines
 
-    #[arg(short, long)]
-    words: u32, // Number of words
+    #[arg(short)]
+    words: Option<PathBuf>, // Number of words
 
-    #[arg(short, long)]
-    max_chars: i32, // Maximum number of characters
+    #[arg(short)]
+    max_chars: Option<PathBuf>, // Maximum number of characters
 }
 
 fn main() {
     let args = Args::parse();
 
-    match args {
-        _ => todo!(),
+    if let Some(file) = args.count.as_deref() {
+        count_bytes(file)
     }
+
+    if let Some(file) = args.lines.as_deref() {
+        count_lines(file)
+    }
+
+    if let Some(file) = args.words.as_deref() {
+        count_words(file)
+    }
+
+    if let Some(file) = args.max_chars.as_deref() {
+        count_chars(file)
+    }
+}
+
+fn count_bytes(file: &Path) {
+    println!("{file:?}")
+}
+
+fn count_lines(file: &Path) {
+    println!("{file:?}")
+}
+
+fn count_words(file: &Path) {
+    println!("{file:?}")
+}
+
+fn count_chars(file: &Path) {
+    println!("{file:?}")
 }
