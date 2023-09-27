@@ -1,4 +1,7 @@
-use std::path::{Path, PathBuf};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 use clap::Parser;
 
@@ -21,7 +24,7 @@ fn main() {
     let args = Args::parse();
 
     if let Some(file) = args.count.as_deref() {
-        count_bytes(file)
+        println!("{}", count_bytes(file))
     }
 
     if let Some(file) = args.lines.as_deref() {
@@ -37,8 +40,8 @@ fn main() {
     }
 }
 
-fn count_bytes(file: &Path) {
-    println!("{file:?}")
+fn count_bytes(file: &Path) -> usize {
+    fs::read_to_string(file).expect("cannot read file").len()
 }
 
 fn count_lines(file: &Path) {
