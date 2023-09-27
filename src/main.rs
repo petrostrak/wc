@@ -32,7 +32,7 @@ fn main() {
     }
 
     if let Some(file) = args.words.as_deref() {
-        count_words(file)
+        println!("{:?}", count_words(file))
     }
 
     if let Some(file) = args.max_chars.as_deref() {
@@ -54,8 +54,14 @@ fn count_lines(file: &Path) -> usize {
         .count()
 }
 
-fn count_words(file: &Path) {
-    println!("{file:?}")
+fn count_words(file: &Path) -> usize {
+    let mut word_count = 0;
+    fs::read_to_string(file)
+        .expect("cannot read file")
+        .lines()
+        .for_each(|l| word_count += l.split_ascii_whitespace().count());
+
+    word_count
 }
 
 fn count_chars(file: &Path) -> usize {
