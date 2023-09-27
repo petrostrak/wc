@@ -36,7 +36,7 @@ fn main() {
     }
 
     if let Some(file) = args.max_chars.as_deref() {
-        count_chars(file)
+        println!("{}", count_chars(file))
     }
 }
 
@@ -55,6 +55,9 @@ fn count_words(file: &Path) {
     println!("{file:?}")
 }
 
-fn count_chars(file: &Path) {
-    println!("{file:?}")
+fn count_chars(file: &Path) -> usize {
+    fs::read_to_string(file)
+        .expect("cannot read file")
+        .chars()
+        .count()
 }
