@@ -41,7 +41,10 @@ fn main() {
 }
 
 fn count_bytes(file: &Path) -> usize {
-    fs::read_to_string(file).expect("cannot read file").len()
+    fs::read_to_string(file)
+        .expect("cannot read file")
+        .as_bytes()
+        .len()
 }
 
 fn count_lines(file: &Path) -> usize {
