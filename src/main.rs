@@ -28,7 +28,7 @@ fn main() {
     }
 
     if let Some(file) = args.lines.as_deref() {
-        count_lines(file)
+        println!("{:?}", count_lines(file))
     }
 
     if let Some(file) = args.words.as_deref() {
@@ -44,8 +44,11 @@ fn count_bytes(file: &Path) -> usize {
     fs::read_to_string(file).expect("cannot read file").len()
 }
 
-fn count_lines(file: &Path) {
-    println!("{file:?}")
+fn count_lines(file: &Path) -> usize {
+    fs::read_to_string(file)
+        .expect("cannot read file")
+        .lines()
+        .count()
 }
 
 fn count_words(file: &Path) {
