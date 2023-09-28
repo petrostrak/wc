@@ -1,9 +1,9 @@
 use std::{
-    fs,
+    env, fs,
     path::{Path, PathBuf},
 };
-
-use clap::Parser;
+extern crate clap;
+use clap::{Arg, ArgMatches, Parser};
 
 #[derive(Parser)]
 struct Args {
@@ -21,40 +21,37 @@ struct Args {
 }
 
 fn main() {
-    let args = Args::parse();
+    let args = env::args().collect::<Vec<String>>();
 
-    if let Some(file) = args.count.as_deref() {
-        println!("{}\t{:?}", count_bytes(file), file)
-    }
-
-    if let Some(file) = args.lines.as_deref() {
-        println!("{:?}\t{:?}", count_lines(file), file)
-    }
-
-    if let Some(file) = args.words.as_deref() {
-        println!("{:?}\t{:?}", count_words(file), file)
-    }
-
-    if let Some(file) = args.max_chars.as_deref() {
-        println!("{}\t{:?}", count_chars(file), file)
-    }
+    let file = &args[1];
+    wc(&file)
 }
 
-fn count_bytes(file: &Path) -> usize {
+fn wc(file: &String) {
+    println!(
+        "       {}      {}     {} {}",
+        count_lines(&file),
+        count_words(&file),
+        count_chars(&file),
+        file
+    )
+}
+
+fn count_bytes(file: &String) -> usize {
     fs::read_to_string(file)
         .expect("cannot read file")
         .as_bytes()
         .len()
 }
 
-fn count_lines(file: &Path) -> usize {
+fn count_lines(file: &String) -> usize {
     fs::read_to_string(file)
         .expect("cannot read file")
         .lines()
         .count()
 }
 
-fn count_words(file: &Path) -> usize {
+fn count_words(file: &String) -> usize {
     let mut word_count = 0;
     fs::read_to_string(file)
         .expect("cannot read file")
@@ -64,7 +61,7 @@ fn count_words(file: &Path) -> usize {
     word_count
 }
 
-fn count_chars(file: &Path) -> usize {
+fn count_chars(file: &String) -> usize {
     fs::read_to_string(file)
         .expect("cannot read file")
         .chars()
