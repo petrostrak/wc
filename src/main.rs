@@ -24,19 +24,19 @@ fn main() {
     let args = Args::parse();
 
     if let Some(file) = args.count.as_deref() {
-        println!("{}", count_bytes(file))
+        println!("{}\t{:?}", count_bytes(file), file)
     }
 
     if let Some(file) = args.lines.as_deref() {
-        println!("{:?}", count_lines(file))
+        println!("{:?}\t{:?}", count_lines(file), file)
     }
 
     if let Some(file) = args.words.as_deref() {
-        println!("{:?}", count_words(file))
+        println!("{:?}\t{:?}", count_words(file), file)
     }
 
     if let Some(file) = args.max_chars.as_deref() {
-        println!("{}", count_chars(file))
+        println!("{}\t{:?}", count_chars(file), file)
     }
 }
 
