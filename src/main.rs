@@ -1,24 +1,4 @@
-use std::{
-    env, fs,
-    path::{Path, PathBuf},
-};
-extern crate clap;
-use clap::{Arg, ArgMatches, Parser};
-
-#[derive(Parser)]
-struct Args {
-    #[arg(short)]
-    count: Option<PathBuf>, // Number of bytes
-
-    #[arg(short)]
-    lines: Option<PathBuf>, // Number of lines
-
-    #[arg(short)]
-    words: Option<PathBuf>, // Number of words
-
-    #[arg(short)]
-    max_chars: Option<PathBuf>, // Maximum number of characters
-}
+use std::{env, fs};
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
