@@ -1,10 +1,36 @@
-use std::{env, fs};
+use std::fs;
+
+use clap::Parser;
+
+#[derive(Parser)]
+struct Cli {
+    /// A command option. Can be:
+    /// c for counting the number of bytes
+    /// w for counting the number of words
+    /// l for counting the number of lines
+    /// m for counting the number of characters
+    #[arg(short)]
+    option: Option<String>,
+
+    /// The file to read
+    #[arg(short)]
+    file: String,
+}
 
 fn main() {
-    let args = env::args().collect::<Vec<String>>();
+    let args = Cli::parse();
 
-    let file = &args[1];
-    wc(&file)
+    let file = args.file;
+
+    if let Some(option) = args.option.as_deref() {
+        match option {
+            "c" => println!("\t{} {}", count_bytes(&file), file),
+            "w" => println!("\t{} {}", count_words(&file), file),
+            "l" => println!("\t{} {}", count_lines(&file), file),
+            "m" => println!("\t{} {}", count_chars(&file), file),
+            _ => wc(&file),
+        }
+    }
 }
 
 fn wc(file: &String) {
@@ -14,7 +40,7 @@ fn wc(file: &String) {
         count_words(&file),
         count_chars(&file),
         file
-    )
+    );
 }
 
 fn count_bytes(file: &String) -> usize {
